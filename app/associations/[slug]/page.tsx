@@ -3,14 +3,15 @@ import { associations } from "../../data/association";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Metadata } from "next"; // facultatif si tu utilises <Metadata />
 
-interface PageProps {
+type Props = {
   params: {
     slug: string;
   };
-}
+};
 
-export default function AssociationDetail({ params }: PageProps) {
+export default function AssociationDetail({ params }: Props) {
   const asso = associations.find((a) => a.slug === params.slug);
 
   if (!asso) {
@@ -19,7 +20,6 @@ export default function AssociationDetail({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 p-8 flex flex-col items-center">
-      {/* Logo et nom */}
       <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-3xl text-center">
         <Image
           src={`/logos/${asso.logo}`}
@@ -31,7 +31,6 @@ export default function AssociationDetail({ params }: PageProps) {
         <h1 className="text-3xl font-extrabold mt-4 text-gray-800">{asso.nom}</h1>
         <p className="mt-2 text-gray-600">{asso.description}</p>
 
-        {/* Infos principales */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
           <div className="bg-blue-50 rounded-xl p-4 shadow-sm">
             <h3 className="text-blue-700 font-semibold">Domaine</h3>
@@ -47,7 +46,6 @@ export default function AssociationDetail({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Bureau */}
         <div className="mt-8 text-left">
           <h2 className="text-xl font-semibold text-blue-700">Bureau</h2>
           <ul className="mt-3 space-y-2">
@@ -62,7 +60,6 @@ export default function AssociationDetail({ params }: PageProps) {
           </ul>
         </div>
 
-        {/* Bouton retour */}
         <div className="mt-8">
           <Link
             href="/associations"
@@ -76,7 +73,7 @@ export default function AssociationDetail({ params }: PageProps) {
   );
 }
 
-// ✅ Fonction pour génération statique des slugs
+// ✅ Fonction de génération statique
 export async function generateStaticParams() {
   return associations.map((a) => ({
     slug: a.slug,
