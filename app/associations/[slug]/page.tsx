@@ -1,24 +1,20 @@
+// app/associations/[slug]/page.tsx
 import { associations } from "../../data/association";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function AssociationDetail({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default function AssociationDetail({ params }: PageProps) {
   const asso = associations.find((a) => a.slug === params.slug);
 
   if (!asso) {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100">
-        <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-md text-center">
-          <p className="text-lg text-gray-700 mb-4">Association introuvable.</p>
-          <Link
-            href="/associations"
-            className="text-blue-600 font-semibold hover:underline"
-          >
-            Retour à la liste
-          </Link>
-        </div>
-      </main>
-    );
+    notFound();
   }
 
   return (
@@ -78,4 +74,11 @@ export default function AssociationDetail({ params }: { params: { slug: string }
       </div>
     </main>
   );
+}
+
+// ✅ Fonction pour génération statique des slugs
+export async function generateStaticParams() {
+  return associations.map((a) => ({
+    slug: a.slug,
+  }));
 }
