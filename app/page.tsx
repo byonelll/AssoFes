@@ -18,7 +18,7 @@ export default function Home() {
         transition={{ duration: 0.8 }}
       >
         <Image
-          src="/logo_assoFes.png"
+          src="/logofes.png"
           alt="Logo Asso Fès"
           width={200}
           height={200}
