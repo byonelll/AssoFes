@@ -1,9 +1,11 @@
 // app/associations/[slug]/page.tsx
+
 import { associations } from "../../data/association";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Metadata } from "next"; // facultatif si tu utilises <Metadata />
+
+// ✅ Pas d'import inutile de `Metadata`, car il n'est pas utilisé.
 
 type Props = {
   params: {
@@ -11,6 +13,7 @@ type Props = {
   };
 };
 
+// ✅ Fonction composant normale (pas async ici !)
 export default function AssociationDetail({ params }: Props) {
   const asso = associations.find((a) => a.slug === params.slug);
 
@@ -73,8 +76,8 @@ export default function AssociationDetail({ params }: Props) {
   );
 }
 
-// ✅ Fonction de génération statique
-export async function generateStaticParams() {
+// ✅ Fonction pour génération statique
+export function generateStaticParams() {
   return associations.map((a) => ({
     slug: a.slug,
   }));
