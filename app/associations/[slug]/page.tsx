@@ -1,11 +1,7 @@
-// app/associations/[slug]/page.tsx
-
 import { associations } from "../../data/association";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-// ✅ Pas d'import inutile de `Metadata`, car il n'est pas utilisé.
 
 type Props = {
   params: {
@@ -13,7 +9,6 @@ type Props = {
   };
 };
 
-// ✅ Fonction composant normale (pas async ici !)
 export default function AssociationDetail({ params }: Props) {
   const asso = associations.find((a) => a.slug === params.slug);
 
@@ -52,9 +47,9 @@ export default function AssociationDetail({ params }: Props) {
         <div className="mt-8 text-left">
           <h2 className="text-xl font-semibold text-blue-700">Bureau</h2>
           <ul className="mt-3 space-y-2">
-            {asso.bureau.map((membre, idx) => (
+            {asso.bureau.map((membre, index) => (
               <li
-                key={idx}
+                key={index}
                 className="bg-white border border-blue-100 rounded-lg px-4 py-2 shadow-sm"
               >
                 {membre}
@@ -76,9 +71,9 @@ export default function AssociationDetail({ params }: Props) {
   );
 }
 
-// ✅ Fonction pour génération statique
+// ✅ Cette fonction est requise pour générer les slugs statiques
 export function generateStaticParams() {
-  return associations.map((a) => ({
-    slug: a.slug,
+  return associations.map((asso) => ({
+    slug: asso.slug,
   }));
 }
